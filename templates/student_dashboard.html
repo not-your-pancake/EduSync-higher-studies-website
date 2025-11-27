@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">My Dashboard</h1>
+        <a href="/student/swipe" class="bg-pink-500 text-white px-6 py-2 rounded-full font-bold shadow-lg hover:bg-pink-600 transition">+ Swipe Universities</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Application Progress Section -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i data-lucide="loader-2" class="text-blue-600"></i> Application Status
+            </h2>
+
+            <div class="space-y-6">
+                {% for app in applications %}
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-gray-700">{{ app.name }}</span>
+                        <span class="text-sm font-bold text-blue-600">{{ app.progress }}%</span>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-blue-600 h-3 rounded-full transition-all duration-1000" style="width: {{ app.progress }}%"></div>
+                    </div>
+                    <div class="flex justify-between mt-2 text-xs text-gray-500">
+                        <span>Status: {{ app.application_status }}</span>
+                        {% if app.application_status == 'pending' %}
+                            <button class="text-blue-500 underline">Request Application</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic">No applications yet. Go swipe some universities!</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Connections Teaser -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+             <h2 class="text-xl font-bold mb-6">My Connections</h2>
+             <p class="text-gray-500">Connect with mentors and alumni.</p>
+             <!-- Add connections list here -->
+        </div>
+    </div>
+</div>
+{% endblock %}

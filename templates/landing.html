@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col md:flex-row h-[80vh] items-center justify-center gap-12">
+    <div class="text-center md:text-left">
+        <div class="bg-white p-4 rounded-2xl shadow-lg inline-block mb-6">
+            <i data-lucide="graduation-cap" class="w-24 h-24 text-blue-600"></i>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Edu Sync Global</h1>
+        <p class="text-gray-500 text-lg max-w-md">Dream Big, Fly High. Automated consultancy for your future.</p>
+    </div>
+
+    <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-sm border border-gray-100">
+        <h2 class="text-2xl font-bold text-center mb-8">WHO ARE YOU?</h2>
+        <div class="space-y-4">
+            <a href="/student/swipe" class="block w-full py-3 bg-gray-800 text-white text-center rounded-lg font-bold hover:bg-gray-900 transition">GUEST</a>
+            <a href="/login/student" class="block w-full py-3 bg-blue-600 text-white text-center rounded-lg font-bold hover:bg-blue-700 transition">STUDENT</a>
+            <a href="/login/employee" class="block w-full py-3 bg-purple-600 text-white text-center rounded-lg font-bold hover:bg-purple-700 transition">EMPLOYEE</a>
+            <a href="/login/admin" class="block w-full py-3 bg-red-600 text-white text-center rounded-lg font-bold hover:bg-red-700 transition">ADMIN</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

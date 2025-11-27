@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Employee Workspace</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Student List -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+                <h2 class="text-xl font-bold">Allocated Students</h2>
+            </div>
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                    <tr>
+                        <th class="px-6 py-3">Name</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for student in students %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium">{{ student.first_name }} {{ student.last_name }}</td>
+                        <td class="px-6 py-4 text-gray-500">{{ student.email }}</td>
+                        <td class="px-6 py-4">
+                            <a href="/employee/student/{{ student.id }}" class="bg-green-500 text-white px-4 py-1.5 rounded-lg text-sm font-bold hover:bg-green-600 transition">
+                                Work
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Performance Graph Placeholder -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold mb-4">Performance</h2>
+            <div class="h-64 bg-gray-50 rounded-lg flex items-end justify-center gap-2 p-4">
+                <!-- CSS Graph -->
+                <div class="w-8 bg-blue-200 h-[40%] rounded-t"></div>
+                <div class="w-8 bg-blue-400 h-[70%] rounded-t"></div>
+                <div class="w-8 bg-blue-600 h-[50%] rounded-t"></div>
+                <div class="w-8 bg-blue-800 h-[90%] rounded-t"></div>
+            </div>
+            <p class="text-center text-sm text-gray-500 mt-4">Students converted this year</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
