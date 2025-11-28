@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex h-[80vh] bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <!-- Sidebar -->
+    <div class="w-1/3 border-r border-gray-200 bg-gray-50">
+        <div class="p-4 border-b border-gray-200 font-bold text-gray-700">Messages</div>
+        <div class="p-4 text-center text-gray-500 text-sm">
+            Select a contact to start chatting.
+            <br><span class="text-xs italic">(Feature coming in v2)</span>
+        </div>
+    </div>
+    
+    <!-- Chat Area -->
+    <div class="flex-1 flex flex-col justify-center items-center bg-white p-8">
+        <div class="bg-blue-50 p-6 rounded-full mb-4">
+            <i data-lucide="message-square" class="w-12 h-12 text-blue-500"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-800">Chat System</h2>
+        <p class="text-gray-500 mt-2">Real-time messaging is connected in the database but needs the frontend UI component.</p>
+    </div>
+</div>
+{% endblock %}

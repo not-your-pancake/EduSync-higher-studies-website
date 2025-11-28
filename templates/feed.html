@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex gap-8 max-w-6xl mx-auto">
+    <!-- Main Feed -->
+    <div class="flex-1">
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 mb-6 flex gap-4 items-center">
+            <div class="w-10 h-10 rounded-full bg-gray-200"></div>
+            <input type="text" placeholder="Write what's in your mind..." class="flex-1 bg-gray-100 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500">
+            <button class="text-blue-600"><i data-lucide="image" class="w-6 h-6"></i></button>
+            <button class="bg-blue-600 text-white p-2 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
+        </div>
+
+        <!-- Post 1 -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-6">
+            <div class="flex gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-red-100"></div>
+                <div>
+                    <h3 class="font-bold">Admin Team</h3>
+                    <p class="text-xs text-gray-500">2 hours ago</p>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-4">Harvard University applications are now open! Check your dashboard for details.</p>
+            <div class="h-64 bg-gray-100 rounded-xl mb-4 flex items-center justify-center text-gray-400">
+                [Image Placeholder]
+            </div>
+            <div class="flex gap-6 text-gray-500">
+                <button class="flex items-center gap-2 hover:text-red-500"><i data-lucide="heart" class="w-5 h-5"></i> Like</button>
+                <button class="flex items-center gap-2 hover:text-blue-500"><i data-lucide="message-circle" class="w-5 h-5"></i> Comment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar (Profile Card from PDF) -->
+    <div class="w-80 hidden md:block">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 text-center sticky top-24">
+            <div class="w-24 h-24 bg-gray-800 rounded-full mx-auto mb-4 flex items-center justify-center text-white">
+                // Profile
+            </div>
+            <h2 class="font-bold text-xl">{{ session.name or 'Guest User' }}</h2>
+            <div class="flex justify-center gap-4 text-sm text-gray-500 my-4">
+                <div><span class="font-bold text-black">20</span> Followers</div>
+                <div><span class="font-bold text-black">15</span> Following</div>
+            </div>
+            
+            {% if session.role == 'student' %}
+            <a href="/student/profile" class="block w-full bg-green-500 text-white py-2 rounded-lg font-bold mb-6 hover:bg-green-600">Edit Personal Info</a>
+            {% elif not session.user_id %}
+            <a href="/login/student" class="block w-full bg-blue-600 text-white py-2 rounded-lg font-bold mb-6">Login to Join</a>
+            {% endif %}
+
+            <!-- Mini Message List -->
+            <div class="text-left border-t pt-4">
+                <h3 class="font-bold text-gray-500 text-sm mb-3 uppercase">Recent Messages</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div> Employee Sara
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                        <div class="w-2 h-2 bg-gray-300 rounded-full"></div> Student Mike
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+```
+
+### 3. Final Step: Add Routes to `app.py`
+Paste this at the bottom of your `app.py` (before `app.run`) to make these new pages work:
+
+```python
+@app.route('/feed')
+def feed():
+    # Covers Pages 2, 6, 14, 20
+    return render_template('feed.html')
+
+@app.route('/connections')
+def connections():
+    # Covers Pages 10, 16, 23
+    return render_template('connections.html')

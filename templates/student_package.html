@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-5xl mx-auto">
+    <a href="/employee/dashboard" class="text-gray-500 hover:text-blue-600 flex items-center gap-2 mb-6">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Dashboard
+    </a>
+
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <div class="bg-blue-600 p-8 text-white">
+            <h1 class="text-3xl font-bold">Student Application Package</h1>
+            <p class="opacity-90 mt-2">Review details and update application status.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
+            <!-- Personal Info Column -->
+            <div class="md:col-span-1 space-y-6 border-r border-gray-100 pr-8">
+                <h3 class="font-bold text-gray-900 border-b pb-2">Personal Details</h3>
+                
+                <div>
+                    <label class="text-xs uppercase text-gray-500 font-bold">Passport Number</label>
+                    <p class="font-medium">{{ info.passport_number or 'Not provided' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs uppercase text-gray-500 font-bold">School Name</label>
+                    <p class="font-medium">{{ info.school_name or 'Not provided' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs uppercase text-gray-500 font-bold">IELTS Score</label>
+                    <p class="font-medium">{{ info.ielts_score or 'N/A' }}</p>
+                </div>
+                <div>
+                    <label class="text-xs uppercase text-gray-500 font-bold">SAT Score</label>
+                    <p class="font-medium">{{ info.sat_score or 'N/A' }}</p>
+                </div>
+            </div>
+
+            <!-- Applications Column -->
+            <div class="md:col-span-2 space-y-6">
+                <h3 class="font-bold text-gray-900 border-b pb-2">Target Universities</h3>
+                
+                {% for uni in unis %}
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-lg font-bold text-blue-800">{{ uni.name }}</h4>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded font-bold uppercase">{{ uni.application_status }}</span>
+                    </div>
+
+                    <!-- Progress Control -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>Application Progress</span>
+                            <span id="prog-val-{{ uni.swipe_id }}" class="font-bold">{{ uni.progress }}%</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="{{ uni.progress }}" 
+                               onchange="updateProgress({{ uni.swipe_id }}, this.value)"
+                               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-gray-500 italic">This student hasn't swiped on any universities yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateProgress(swipeId, value) {
+        // Update number visually
+        document.getElementById(`prog-val-${swipeId}`).innerText = value + '%';
+        
+        // Send to API
+        fetch('/api/update_progress', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ swipe_id: swipeId, progress: value })
+        });
+    }
+</script>
+{% endblock %}
